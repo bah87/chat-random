@@ -1,8 +1,8 @@
-export const RECEIVE_CURRENT_USER = "RECEIVE_CURRENT_USER";
+export const LOGIN_USER = "LOGIN_USER";
 
-export const receiveCurrentUser = (username: string) => {
+export const loginUser = (username: string) => {
   return {
-    type: RECEIVE_CURRENT_USER,
+    type: LOGIN_USER,
     username
   };
 };

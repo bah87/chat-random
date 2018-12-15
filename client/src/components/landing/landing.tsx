@@ -4,14 +4,16 @@ export interface ILandingState {
   readonly username: string;
 }
 
-export class Landing extends React.Component<any> {
+export interface ILandingProps {
+  loginUser: (username: string) => void;
+}
+
+export class Landing extends React.Component<ILandingProps> {
   public state: ILandingState;
 
-  constructor(props: any) {
+  constructor(props: ILandingProps) {
     super(props);
-    this.state = {
-      username: ""
-    };
+    this.state = { username: "" };
   }
 
   handleChange = (e: any) => {
@@ -23,7 +25,7 @@ export class Landing extends React.Component<any> {
       return;
     }
 
-    this.props.login(this.state.username);
+    this.props.loginUser(this.state.username);
   };
 
   render() {

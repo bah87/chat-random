@@ -1,10 +1,11 @@
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
-import { Landing } from "./landing";
-import { receiveCurrentUser } from "../../actions/session-actions";
+import { Landing, ILandingProps } from "./landing";
+import { loginUser } from "../../actions/session-actions";
 
-const mapDispatchToProps = (dispatch: any) => ({
-  login: (username: string) => dispatch(receiveCurrentUser(username))
+const mapDispatchToProps = (dispatch: Dispatch): ILandingProps => ({
+  loginUser: (username: string) => dispatch(loginUser(username))
 });
 
 export default connect(
