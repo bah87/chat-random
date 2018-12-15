@@ -4,6 +4,8 @@
   "description": "chat-random-server",
   "dependencies": {
     "express": "^4.16.4",
-    "socket.io": "^2.2.0"
+    "moment": "^2.23.0",
+    "socket.io": "^2.2.0",
+    "uuid": "^3.3.2"
   }
 }
