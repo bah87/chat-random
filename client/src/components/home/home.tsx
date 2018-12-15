@@ -10,6 +10,14 @@ export class Home extends React.Component<any> {
   }
 
   render() {
-    return <div>Welcome to the home page!</div>;
+    return (
+      <div>
+        <div>Welcome to the ChatRandom</div>
+        <div>
+          Enter a username and you'll be chatting with someone in no time!
+        </div>
+        <input type="text" placeholder="Enter username" />
+      </div>
+    );
   }
 }
