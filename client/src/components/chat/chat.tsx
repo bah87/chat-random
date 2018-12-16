@@ -6,31 +6,55 @@ import "./chat.css";
 
 export interface IChatProps extends IChatInputProps {
   readonly messages: IChatMessage[];
-  readonly currentUser: string;
 }
 
 export class Chat extends React.Component<IChatProps> {
+  private messagesEnd: React.RefObject<HTMLDivElement>;
+
+  constructor(props: IChatProps) {
+    super(props);
+    this.messagesEnd = React.createRef();
+  }
+
+  scrollToBottom = () => {
+    console.log("scrollToBottom called: ", this.messagesEnd.current);
+    if (this.messagesEnd.current) {
+      this.messagesEnd.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
   render() {
-    const { currentUser, messages, onSubmit } = this.props;
+    const { messages, onSubmit } = this.props;
 
     return (
       <div className="chat-message-container">
+        <div className="chat-message-header">
+          Group chat name and details...
+        </div>
         <ul className="chat-message-list">
           {messages.map((msg: IChatMessage) => {
-            console.log("msg: ", currentUser, msg.user);
             return (
-              <li
-                key={msg.id}
-                className={`chat-message ${
-                  currentUser === msg.user ? "current-user" : ""
-                }`}
-              >
+              <li key={msg.id} className="chat-message">
                 <Message message={msg} />
               </li>
             );
           })}
+          <li key="messages-end">
+            <div ref={this.messagesEnd} className="chat-messages-end" />
+          </li>
         </ul>
-        <ChatInput onSubmit={onSubmit} />
+
+        <div className="chat-message-footer">
+          <ChatInput onSubmit={onSubmit} />
+        </div>
       </div>
     );
   }

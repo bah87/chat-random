@@ -54,11 +54,7 @@ export class Home extends React.Component<IHomeProps> {
     return (
       <div className="home-container">
         <ChatSideBar currentUser={username} />
-        <Chat
-          currentUser={username}
-          messages={chat}
-          onSubmit={this.handleSend}
-        />
+        <Chat messages={chat} onSubmit={this.handleSend} />
       </div>
     );
   }

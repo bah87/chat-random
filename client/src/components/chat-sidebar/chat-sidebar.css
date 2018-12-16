@@ -1,6 +1,7 @@
 .chat-sidebar {
   height: 100%;
-  width: 100px;
+  width: 20%;
+  min-width: 100px;
   background-color: #12c998;
   border-right: 1px solid lightgrey;
 }
