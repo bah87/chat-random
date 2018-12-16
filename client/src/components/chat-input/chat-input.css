@@ -1,0 +1,11 @@
+.chat-input {
+  width: 100%;
+  height: 25px;
+  font-size: 15px;
+  padding: 0 5px;
+  box-sizing: border-box;
+}
+
+.chat-input:focus {
+  outline: none;
+}

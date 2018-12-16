@@ -1,7 +1,6 @@
 import * as React from "react";
 import io from "socket.io-client";
 import moment from "moment";
-
 import { Chat } from "../chat/chat";
 
 export interface IChatMessage {
@@ -17,7 +16,6 @@ export interface IHomeProps {
 }
 
 export interface IHomeState {
-  readonly message: string;
   readonly socket: SocketIOClient.Socket;
   readonly chat: IChatMessage[];
 }
@@ -27,7 +25,7 @@ export class Home extends React.Component<IHomeProps> {
 
   constructor(props: IHomeProps) {
     super(props);
-    this.state = { message: "", socket: io("http://localhost:3001"), chat: [] };
+    this.state = { socket: io("http://localhost:3001"), chat: [] };
     this.state.socket.on("chat message", this.handleResponse);
   }
 
@@ -40,33 +38,25 @@ export class Home extends React.Component<IHomeProps> {
     this.setState({ chat });
   };
 
-  handleChange = (e: any) => {
-    this.setState({ message: e.currentTarget.value });
-  };
-
-  handleSend = () => {
-    const { socket, message } = this.state;
+  handleSend = (message: string) => {
+    const { socket } = this.state;
     const { username } = this.props;
-    console.log("Sending message: ", message);
-    this.setState({ message: "" });
+    console.log("Sending message from client: ", message);
     socket.emit("chat message", { body: message, user: username });
   };
 
   render() {
     const { username } = this.props;
-    const { chat, message } = this.state;
+    const { chat } = this.state;
 
     return (
       <div>
         <div>{`Welcome ${username}!`}</div>
-        <input
-          type="text"
-          placeholder="Message..."
-          onChange={this.handleChange}
-          value={message}
+        <Chat
+          currentUser={username}
+          messages={chat}
+          onSubmit={this.handleSend}
         />
-        <button onClick={this.handleSend}>Send</button>
-        {!!chat.length && <Chat currentUser={username} messages={chat} />}
       </div>
     );
   }

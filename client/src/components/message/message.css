@@ -1,0 +1,9 @@
+.message-item {
+  background-color: blue;
+  border-radius: 20px;
+  margin: 8px 0;
+  padding: 5px 12px;
+  box-sizing: content-box;
+  color: white;
+  max-width: 50%;
+}

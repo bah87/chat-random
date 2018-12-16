@@ -1,7 +1,13 @@
-.chat-message {
+.chat-message-container {
+  padding: 0 20px;
+}
+
+.chat-message-list {
   list-style: none;
   display: flex;
   flex-direction: column;
+  padding: 0;
+  margin: 0;
 }
 
 .current-user {
