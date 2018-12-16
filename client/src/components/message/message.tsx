@@ -11,10 +11,13 @@ export class Message extends React.Component<IMessageProps> {
     const { time, user, body } = this.props.message;
 
     return (
-      <div className="message-item">
-        <div>{`Time: ${time}`}</div>
-        <div>{user}</div>
-        <div>{body}</div>
+      <div className="message-container">
+        <div className="message-user">{user}</div>
+        <div className="message-item">
+          {body}
+          {/* <div>{`Time: ${time}`}</div> */}
+          {/* <div>{body}</div> */}
+        </div>
       </div>
     );
   }

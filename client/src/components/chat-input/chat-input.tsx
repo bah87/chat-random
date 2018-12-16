@@ -31,7 +31,7 @@ export class ChatInput extends React.Component<IChatInputProps> {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className="chat-form" onSubmit={this.handleSubmit}>
         <input
           className="chat-input"
           type="text"

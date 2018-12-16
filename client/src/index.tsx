@@ -4,6 +4,10 @@ import "./index.css";
 import Root from "./components/root";
 import * as serviceWorker from "./serviceWorker";
 import configureStore from "./store/store";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faRandom, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faRandom, faArrowRight);
 
 document.addEventListener("DOMContentLoaded", () => {
   const store = configureStore({});
