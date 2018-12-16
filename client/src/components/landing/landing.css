@@ -24,11 +24,12 @@
   padding: 5px;
   border: 1px solid lightgrey;
   color: black;
+  box-sizing: border-box;
 }
 
 .sign-in-btn,
 .sign-in-input {
-  height: 30px;
+  height: 40px;
   width: 50%;
   border-radius: 3px;
 }

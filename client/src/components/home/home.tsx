@@ -2,6 +2,8 @@ import * as React from "react";
 import io from "socket.io-client";
 import moment from "moment";
 import { Chat } from "../chat/chat";
+import { ChatSideBar } from "../chat-sidebar/chat-sidebar";
+import "./home.css";
 
 export interface IChatMessage {
   readonly id?: string;
@@ -50,8 +52,8 @@ export class Home extends React.Component<IHomeProps> {
     const { chat } = this.state;
 
     return (
-      <div>
-        <div>{`Welcome ${username}!`}</div>
+      <div className="home-container">
+        <ChatSideBar currentUser={username} />
         <Chat
           currentUser={username}
           messages={chat}
