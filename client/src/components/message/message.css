@@ -2,17 +2,36 @@
   display: inline-flex;
   flex-direction: column;
   max-width: 50%;
+  color: black;
 }
 
 .message-user {
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 14px;
+  margin-right: 8px;
+}
+
+.message-time {
   color: gray;
+  font-size: 10px;
+}
+
+.message-items {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  list-style: none;
 }
 
 .message-item {
-  background-color: rgb(21, 192, 112);
-  border-radius: 20px;
-  margin: 8px 0;
-  padding: 5px 12px;
-  box-sizing: border-box;
-  color: white;
+  margin-top: 4px;
+}
+
+.message-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 8px;
 }

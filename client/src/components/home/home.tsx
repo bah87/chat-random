@@ -9,7 +9,6 @@ export interface IChatMessage {
   readonly id?: string;
   readonly body: string;
   readonly user: string;
-  readonly subject?: string;
   readonly time?: string;
 }
 
@@ -35,7 +34,7 @@ export class Home extends React.Component<IHomeProps> {
     const chat = this.state.chat;
     chat.push({
       ...response,
-      time: moment(response.time).format("MMMM Do YYYY, h:mm:ss a")
+      time: moment(response.time).format("h:mm a")
     });
     this.setState({ chat });
   };
