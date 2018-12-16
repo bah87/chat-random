@@ -17,7 +17,7 @@
 }
 
 .chat-message {
-  padding: 0 20px;
+  width: 100%;
 }
 
 .chat-message-header {

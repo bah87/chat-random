@@ -20,6 +20,7 @@ export class Message extends React.Component<IMessageProps> {
         <ul className="message-items">
           {messages.map((message: IChatMessage) => (
             <li className="message-item" key={message.id}>
+              <div className="message-item-time">{message.time}</div>
               {message.body}
             </li>
           ))}

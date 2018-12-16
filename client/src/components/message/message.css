@@ -1,7 +1,5 @@
 .message-container {
-  display: inline-flex;
-  flex-direction: column;
-  max-width: 50%;
+  width: 100%;
   color: black;
 }
 
@@ -25,7 +23,25 @@
 }
 
 .message-item {
-  margin-top: 4px;
+  padding: 4px 60px;
+  position: relative;
+}
+
+.message-item:hover {
+  background-color: #8886944f;
+}
+
+.message-item-time {
+  display: none;
+  position: absolute;
+  left: 8px;
+  font-size: 10px;
+  bottom: 5px;
+  color: gray;
+}
+
+.message-item:hover .message-item-time {
+  display: block;
 }
 
 .message-header {
@@ -34,4 +50,5 @@
   align-items: center;
   justify-content: flex-start;
   margin-top: 8px;
+  padding: 0 60px;
 }
