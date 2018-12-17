@@ -6,7 +6,7 @@ const app = express();
 // var moment = require("moment");
 const mongoose = require("mongoose");
 const config = require("./config");
-const socketEvents = require("./socket-events");
+const socketEvents = require("./socket/socket-events");
 
 mongoose.connect(config.database).catch(function(reason) {
   console.log("Unable to connect to the mongodb instance. Error: ", reason);

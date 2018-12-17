@@ -19,6 +19,13 @@ export interface IHomeProps {
 export interface IHomeState {
   readonly socket: SocketIOClient.Socket;
   readonly chat: IChatMessage[];
+  readonly chatId?: string;
+}
+
+export interface INewMessage {
+  readonly chatId: string;
+  readonly author: string;
+  readonly body: string;
 }
 
 export enum SocketEventsEnum {
@@ -33,24 +40,33 @@ export class Home extends React.Component<IHomeProps> {
   constructor(props: IHomeProps) {
     super(props);
     this.state = { socket: io("http://localhost:3001"), chat: [] };
-    this.state.socket.on("chat message", this.handleResponse);
+    this.state.socket.on(SocketEventsEnum.NewMessage, this.handleResponse);
     this.state.socket.emit(SocketEventsEnum.RegisterUser, props.username);
+    this.state.socket.emit(SocketEventsEnum.RequestRandomChat, props.username);
+    this.state.socket.on(SocketEventsEnum.RequestRandomChat, this.addChat);
   }
 
-  handleResponse = (response: IChatMessage) => {
-    const chat = this.state.chat;
-    chat.push({
-      ...response,
-      time: moment(response.time).format("h:mm a")
-    });
-    this.setState({ chat });
+  addChat = (chatId: any) => {
+    console.log("addChat", chatId);
+    this.setState({ chatId });
   };
 
-  handleSend = (message: string) => {
-    const { socket } = this.state;
-    const { username } = this.props;
+  handleResponse = (response: INewMessage) => {
+    console.log("handleResponse", response);
+    // const chat = this.state.chat;
+    // chat.push({
+    //   ...response,
+    //   time: moment(response.time).format("h:mm a")
+    // });
+    // this.setState({ chat });
+  };
+
+  handleSend = (body: string) => {
+    const { socket, chatId } = this.state;
+    const { username: author } = this.props;
+    const message = { chatId, body, author };
     console.log("Sending message from client: ", message);
-    socket.emit("chat message", { body: message, user: username });
+    socket.emit(SocketEventsEnum.NewMessage, message);
   };
 
   render() {

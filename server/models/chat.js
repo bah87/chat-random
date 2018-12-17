@@ -3,9 +3,7 @@ const Schema = mongoose.Schema;
 
 const ChatSchema = new Schema(
   {
-    participants: [{ type: Schema.Types.ObjectId, ref: "User" }]
-  },
-  {
+    participants: [{ type: Schema.Types.ObjectId, ref: "User" }],
     isOpen: {
       type: Boolean,
       required: true
