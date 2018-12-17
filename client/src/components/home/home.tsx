@@ -20,6 +20,12 @@ export interface IHomeState {
   readonly socket: SocketIOClient.Socket;
   readonly chat: IChatMessage[];
   readonly chatId?: string;
+  readonly pairedUser?: string;
+}
+
+export interface IRequestRandomChatResponse {
+  readonly chatId: string;
+  readonly participants: string[];
 }
 
 export interface INewMessage {
@@ -46,9 +52,17 @@ export class Home extends React.Component<IHomeProps> {
     this.state.socket.on(SocketEventsEnum.RequestRandomChat, this.addChat);
   }
 
-  addChat = (chatId: any) => {
-    console.log("addChat", chatId);
-    this.setState({ chatId });
+  addChat = (response: IRequestRandomChatResponse) => {
+    console.log("addChat", response);
+    const { chatId, participants } = response;
+
+    const pairedUser =
+      participants &&
+      participants.filter(user => user !== this.props.username)[0];
+
+    const newState = pairedUser ? { chatId, pairedUser } : { chatId };
+
+    this.setState(newState);
   };
 
   handleResponse = (response: INewMessage) => {

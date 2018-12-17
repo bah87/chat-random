@@ -1,7 +1,8 @@
 const {
   registerUser,
   requestRandomChat,
-  createMessage
+  createMessage,
+  socketEvents
 } = require("./socket-event-handlers");
 
 exports = module.exports = function(io) {
@@ -9,11 +10,11 @@ exports = module.exports = function(io) {
   io.on("connection", socket => {
     console.log("a user connected", socket.id);
 
-    socket.on("register user", registerUser(socket));
+    socket.on(socketEvents.REGISTER_USER, registerUser(socket));
 
-    socket.on("request random chat", requestRandomChat(socket));
+    socket.on(socketEvents.REQUEST_RANDOM_CHAT, requestRandomChat(socket, io));
 
-    socket.on("new message", createMessage(io));
+    socket.on(socketEvents.NEW_MESSAGE, createMessage(io));
 
     socket.on("disconnect", () => {
       console.log("user disconnected", socket.id);

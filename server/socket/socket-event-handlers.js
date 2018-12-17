@@ -2,18 +2,24 @@ const User = require("../models/user");
 const Chat = require("../models/chat");
 const Message = require("../models/message");
 
+const REGISTER_USER = "register user";
+const REQUEST_RANDOM_CHAT = "request random chat";
+const NEW_MESSAGE = "new message";
+
+exports.socketEvents = { REGISTER_USER, REQUEST_RANDOM_CHAT, NEW_MESSAGE };
+
 exports.registerUser = socket => username => {
   User.create({ username })
     .then(user => {
       console.log("user registered", user.username);
-      socket.emit("register user", user.username);
+      socket.emit(REGISTER_USER, user.username);
     })
     .catch(err => {
       console.log("failed to register user", username, err);
     });
 };
 
-exports.requestRandomChat = socket => username => {
+exports.requestRandomChat = (socket, io) => username => {
   User.findOne({ username })
     .then(user => {
       console.log("found user. adding to chat", user);
@@ -32,7 +38,7 @@ exports.requestRandomChat = socket => username => {
             })
               .then(newChat => {
                 console.log("created and joined chat", newChat);
-                socket.emit("request random chat", newChat._id);
+                socket.emit(REQUEST_RANDOM_CHAT, { chatId: newChat._id });
                 socket.join(newChat._id);
               })
               .catch(err => {
@@ -40,8 +46,16 @@ exports.requestRandomChat = socket => username => {
               });
           } else {
             console.log("added to chat", chat);
-            socket.emit("request random chat", chat._id);
-            socket.join(chat._id);
+            User.findById(chat.participants[0])
+              .then(chatCreator => {
+                console.log("found chat creator", chatCreator);
+                socket.join(chat._id);
+                io.to(chat._id).emit(REQUEST_RANDOM_CHAT, {
+                  chatId: chat._id,
+                  participants: [chatCreator.username, user.username]
+                });
+              })
+              .catch(err => console.log("unable to find user", err));
           }
         }
       );
@@ -59,7 +73,7 @@ exports.createMessage = io => message => {
       Message.create({ ...message, author: user._id })
         .then(message => {
           console.log("message created. emitting to other user", message);
-          io.to(message.chatId).emit("new message", message);
+          io.to(message.chatId).emit(NEW_MESSAGE, message);
         })
         .catch(err => console.log("unable to create message", err));
     })
