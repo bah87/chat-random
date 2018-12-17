@@ -71,9 +71,17 @@ exports.createMessage = io => message => {
     .then(user => {
       console.log("found user. creating message", user);
       Message.create({ ...message, author: user._id })
-        .then(message => {
-          console.log("message created. emitting to other user", message);
-          io.to(message.chatId).emit(NEW_MESSAGE, message);
+        .then(newMessage => {
+          console.log("message created. emitting to other user", newMessage);
+          const { body, chatId, createdAt, updatedAt, _id } = newMessage;
+          io.to(chatId).emit(NEW_MESSAGE, {
+            _id,
+            author: user.username,
+            body,
+            chatId,
+            createdAt,
+            updatedAt
+          });
         })
         .catch(err => console.log("unable to create message", err));
     })
