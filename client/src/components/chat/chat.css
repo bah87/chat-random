@@ -26,6 +26,9 @@
   flex-direction: row;
   align-items: center;
   border-bottom: 1px solid lightgrey;
+  background-color: white;
+  color: black;
+  padding-left: 10px;
 }
 
 .chat-message-footer {

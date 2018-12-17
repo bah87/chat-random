@@ -9,18 +9,18 @@ export interface IMessageProps {
 
 export class Message extends React.Component<IMessageProps> {
   render() {
-    const { time, user, messages } = this.props.message;
+    const { updatedAt, author, messages } = this.props.message;
 
     return (
       <div className="message-container">
         <div className="message-header">
-          <div className="message-user">{user}</div>
-          <div className="message-time">{time}</div>
+          <div className="message-user">{author}</div>
+          <div className="message-time">{updatedAt}</div>
         </div>
         <ul className="message-items">
           {messages.map((message: IChatMessage) => (
-            <li className="message-item" key={message.id}>
-              <div className="message-item-time">{message.time}</div>
+            <li className="message-item" key={message._id}>
+              <div className="message-item-time">{message.updatedAt}</div>
               {message.body}
             </li>
           ))}

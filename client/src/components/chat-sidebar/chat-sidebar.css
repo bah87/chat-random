@@ -5,3 +5,9 @@
   background-color: #12c998;
   border-right: 1px solid lightgrey;
 }
+
+.chat-sidebar-user {
+  color: white;
+  font-weight: bold;
+  margin: 5px;
+}
