@@ -17,18 +17,6 @@ export class ChatInput extends React.Component<IChatInputProps> {
     this.state = { message: "" };
   }
 
-  handleChange = (e: any) => {
-    this.setState({ message: e.currentTarget.value });
-  };
-
-  handleSubmit = (e: any) => {
-    // don't want to reload page
-    e.preventDefault();
-
-    this.props.onSubmit(this.state.message);
-    this.setState({ message: "" });
-  };
-
   render() {
     return (
       <form className="chat-form" onSubmit={this.handleSubmit}>
@@ -42,4 +30,16 @@ export class ChatInput extends React.Component<IChatInputProps> {
       </form>
     );
   }
+
+  private handleChange = (e: any) => {
+    this.setState({ message: e.currentTarget.value });
+  };
+
+  private handleSubmit = (e: any) => {
+    // don't want to reload page
+    e.preventDefault();
+
+    this.props.onSubmit(this.state.message);
+    this.setState({ message: "" });
+  };
 }

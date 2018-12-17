@@ -1,7 +1,7 @@
 import * as React from "react";
 import { RouteComponentProps, withRouter, Route, Redirect } from "react-router";
 import { connect } from "react-redux";
-import { IAppState } from "../store/store";
+import { IAppState } from "../types";
 
 export interface IRouteProps extends RouteComponentProps<any> {
   readonly isAuthenticated: boolean;

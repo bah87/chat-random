@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Header } from "../header/header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Header } from "../header/header";
 import "./landing.css";
 
 export interface ILandingState {
@@ -18,18 +18,6 @@ export class Landing extends React.Component<ILandingProps> {
     super(props);
     this.state = { username: "" };
   }
-
-  handleChange = (e: any) => {
-    this.setState({ username: e.currentTarget.value });
-  };
-
-  handleClick = () => {
-    if (!this.state.username.length) {
-      return;
-    }
-
-    this.props.loginUser(this.state.username);
-  };
 
   render() {
     return (
@@ -52,4 +40,16 @@ export class Landing extends React.Component<ILandingProps> {
       </div>
     );
   }
+
+  private handleChange = (e: any) => {
+    this.setState({ username: e.currentTarget.value });
+  };
+
+  private handleClick = () => {
+    if (!this.state.username.length) {
+      return;
+    }
+
+    this.props.loginUser(this.state.username);
+  };
 }

@@ -1,4 +1,3 @@
-// import merge from 'lodash/merge';
 import { LOGIN_USER } from "../actions/session-actions";
 
 const _nullUser = Object.freeze({

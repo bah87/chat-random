@@ -1,6 +1,11 @@
 import * as React from "react";
 import io from "socket.io-client";
 import moment from "moment";
+import {
+  IChatMessage,
+  SocketEventsEnum,
+  IRequestRandomChatResponse
+} from "../../types";
 import { Chat } from "../chat/chat";
 import { ChatSideBar } from "../chat-sidebar/chat-sidebar";
 import "./home.css";
@@ -14,29 +19,6 @@ export interface IHomeState {
   readonly chat: IChatMessage[];
   readonly chatId?: string;
   readonly pairedUser?: string;
-}
-
-export interface IRequestRandomChatResponse {
-  readonly chatId: string;
-  readonly participants: string[];
-}
-
-export interface IBaseMessage {
-  readonly _id: string;
-  readonly author: string;
-  readonly createdAt: string;
-  readonly updatedAt: string;
-}
-
-export interface IChatMessage extends IBaseMessage {
-  readonly chatId: string;
-  readonly body: string;
-}
-
-export enum SocketEventsEnum {
-  RegisterUser = "register user",
-  RequestRandomChat = "request random chat",
-  NewMessage = "new message"
 }
 
 export class Home extends React.Component<IHomeProps> {

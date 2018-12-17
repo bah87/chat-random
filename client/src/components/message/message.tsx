@@ -1,6 +1,5 @@
 import * as React from "react";
-import { IChatMessage } from "../home/home";
-import { IGroupedMessage } from "../chat/chat";
+import { IChatMessage, IGroupedMessage } from "../../types";
 import "./message.css";
 
 export interface IMessageProps {

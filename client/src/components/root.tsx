@@ -1,8 +1,8 @@
 import * as React from "react";
+import { Store } from "redux";
 import { Provider } from "react-redux";
 import { HashRouter } from "react-router-dom";
 import { App } from "./App";
-import { Store } from "redux";
 
 export interface IRootProps {
   store: Store;

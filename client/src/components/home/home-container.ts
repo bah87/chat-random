@@ -1,6 +1,5 @@
 import { connect } from "react-redux";
-
-import { IAppState } from "../../store/store";
+import { IAppState } from "../../types";
 import { Home, IHomeProps } from "./home";
 
 const mapStateToProps = (state: IAppState): IHomeProps => ({

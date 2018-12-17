@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IChatMessage, IBaseMessage } from "../home/home";
+import { IGroupedMessage, IChatMessage } from "../../types";
 import { Message } from "../message/message";
 import { ChatInput, IChatInputProps } from "../chat-input/chat-input";
 import "./chat.css";
@@ -7,10 +7,6 @@ import "./chat.css";
 export interface IChatProps extends IChatInputProps {
   readonly messages: IChatMessage[];
   readonly pairedUser?: string;
-}
-
-export interface IGroupedMessage extends IBaseMessage {
-  readonly messages: IChatMessage[];
 }
 
 export class Chat extends React.Component<IChatProps> {
