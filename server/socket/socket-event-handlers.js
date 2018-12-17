@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const Chat = require("../models/chat");
 const Message = require("../models/message");
+const { ircHelper } = require("../helpers");
 
 const REGISTER_USER = "register user";
 const REQUEST_RANDOM_CHAT = "request random chat";
@@ -74,14 +75,21 @@ exports.createMessage = io => message => {
         .then(newMessage => {
           console.log("message created. emitting to other user", newMessage);
           const { body, chatId, createdAt, updatedAt, _id } = newMessage;
-          io.to(chatId).emit(NEW_MESSAGE, {
-            _id,
-            author: user.username,
-            body,
-            chatId,
-            createdAt,
-            updatedAt
-          });
+
+          const { delay, newBody } = ircHelper(body);
+
+          setTimeout(
+            () =>
+              io.to(chatId).emit(NEW_MESSAGE, {
+                _id,
+                author: user.username,
+                body: newBody,
+                chatId,
+                createdAt,
+                updatedAt
+              }),
+            delay
+          );
         })
         .catch(err => console.log("unable to create message", err));
     })
