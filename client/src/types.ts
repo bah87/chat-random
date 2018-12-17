@@ -25,6 +25,12 @@ export enum SocketEventsEnum {
   NewMessage = "new message"
 }
 
+export enum PairingStatusEnum {
+  Paired = "paired",
+  Unpaired = "unpaired",
+  Pairing = "pairing"
+}
+
 export interface IAppState {
   readonly username: string;
 }
