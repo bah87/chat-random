@@ -26,7 +26,7 @@ In a third tab, cd into the server directory and run:
 
 ```
 npm install
-npm start
+node index.js
 ```
 
 Visit `http://localhost:3000` in your browser to view the app. Open up multiple tabs to communicate back and forth.
