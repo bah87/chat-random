@@ -80,16 +80,15 @@ export class Home extends React.Component<IHomeProps> {
       participants &&
       participants.filter(user => user !== this.props.username)[0];
 
-    let newState;
+    const newState = { chatId, pairedUser };
     if (pairedUser) {
-      newState = { chatId, pairedUser };
       this.setState({ pairingStatus: PairingStatusEnum.Pairing });
       setTimeout(
         () => this.setState({ pairingStatus: PairingStatusEnum.Paired }),
         PAIRING_DELAY
       );
     } else {
-      newState = { chatId };
+      this.setState({ pairingStatus: PairingStatusEnum.Unpaired });
     }
 
     this.setState(newState);

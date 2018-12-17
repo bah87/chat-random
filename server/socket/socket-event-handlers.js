@@ -7,9 +7,12 @@ const REGISTER_USER = "register user";
 const REQUEST_RANDOM_CHAT = "request random chat";
 const NEW_MESSAGE = "new message";
 
-exports.socketEvents = { REGISTER_USER, REQUEST_RANDOM_CHAT, NEW_MESSAGE };
+/**
+ * TODO: Refactor to clean up promises
+ * Use more helpers to eliminate redundant code
+ */
 
-exports.registerUser = socket => username => {
+const registerUser = socket => username => {
   User.create({ username })
     .then(user => {
       console.log("user registered", user.username);
@@ -20,7 +23,7 @@ exports.registerUser = socket => username => {
     });
 };
 
-exports.requestRandomChat = (socket, io) => username => {
+const requestRandomChat = (socket, io) => username => {
   User.findOne({ username })
     .then(user => {
       console.log("found user. adding to chat", user);
@@ -66,7 +69,7 @@ exports.requestRandomChat = (socket, io) => username => {
     });
 };
 
-exports.createMessage = io => message => {
+const createMessage = (socket, io) => message => {
   // message should have chatId, body and author
   User.findOne({ username: message.author })
     .then(user => {
@@ -76,22 +79,44 @@ exports.createMessage = io => message => {
           console.log("message created. emitting to other user", newMessage);
           const { body, chatId, createdAt, updatedAt, _id } = newMessage;
 
-          const { delay, newBody } = ircHelper(body);
+          const { delay, newBody, hop } = ircHelper(body);
 
-          setTimeout(
-            () =>
-              io.to(chatId).emit(NEW_MESSAGE, {
-                _id,
-                author: user.username,
-                body: newBody,
-                chatId,
-                createdAt,
-                updatedAt
-              }),
-            delay
-          );
+          if (hop) {
+            const repairUser = requestRandomChat(socket, io);
+            repairUser(user.username);
+            socket.leave(chatId);
+
+            Chat.findById(chatId)
+              .then(chat => {
+                const otherUserId = chat.participants.filter(
+                  id => id !== user._id
+                )[0];
+                User.findById(otherUserId)
+                  .then(otherUser => repairUser(otherUser.username))
+                  .catch(err => console.log("could not find user", err));
+              })
+              .catch(err => console.log("could not find chat", err));
+          } else {
+            setTimeout(
+              () =>
+                io.to(chatId).emit(NEW_MESSAGE, {
+                  _id,
+                  author: user.username,
+                  body: newBody,
+                  chatId,
+                  createdAt,
+                  updatedAt
+                }),
+              delay
+            );
+          }
         })
         .catch(err => console.log("unable to create message", err));
     })
     .catch(err => console.log("unable to find user", err));
 };
+
+exports.socketEvents = { REGISTER_USER, REQUEST_RANDOM_CHAT, NEW_MESSAGE };
+exports.registerUser = registerUser;
+exports.requestRandomChat = requestRandomChat;
+exports.createMessage = createMessage;

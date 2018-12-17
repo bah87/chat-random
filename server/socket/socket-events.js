@@ -14,7 +14,7 @@ exports = module.exports = function(io) {
 
     socket.on(socketEvents.REQUEST_RANDOM_CHAT, requestRandomChat(socket, io));
 
-    socket.on(socketEvents.NEW_MESSAGE, createMessage(io));
+    socket.on(socketEvents.NEW_MESSAGE, createMessage(socket, io));
 
     socket.on("disconnect", () => {
       console.log("user disconnected", socket.id);
