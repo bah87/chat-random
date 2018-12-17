@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const Chat = require("../models/chat");
+const Message = require("../models/message");
 
 exports.registerUser = socket => username => {
   User.create({ username })
@@ -48,4 +49,19 @@ exports.requestRandomChat = socket => username => {
     .catch(err => {
       console.log("failed to find user", err);
     });
+};
+
+exports.createMessage = io => message => {
+  // message should have chatId, body and author
+  User.findOne({ username: message.author })
+    .then(user => {
+      console.log("found user. creating message", user);
+      Message.create({ ...message, author: user._id })
+        .then(message => {
+          console.log("message created. emitting to other user", message);
+          io.to(message.chatId).emit("new message", message);
+        })
+        .catch(err => console.log("unable to create message", err));
+    })
+    .catch(err => console.log("unable to find user", err));
 };

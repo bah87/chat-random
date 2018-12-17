@@ -24,7 +24,6 @@ export class Chat extends React.Component<IChatProps> {
   }
 
   scrollToBottom = () => {
-    console.log("scrollToBottom called: ", this.messagesEnd.current);
     if (this.messagesEnd.current) {
       this.messagesEnd.current.scrollIntoView({ behavior: "smooth" });
     }
