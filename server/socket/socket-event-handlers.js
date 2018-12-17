@@ -86,16 +86,18 @@ const createMessage = (socket, io) => message => {
             repairUser(user.username);
             socket.leave(chatId);
 
-            Chat.findById(chatId)
-              .then(chat => {
-                const otherUserId = chat.participants.filter(
-                  id => id !== user._id
-                )[0];
-                User.findById(otherUserId)
-                  .then(otherUser => repairUser(otherUser.username))
-                  .catch(err => console.log("could not find user", err));
-              })
-              .catch(err => console.log("could not find chat", err));
+            // todo: when one user sends /hop, also request to repair the other user
+            // need to exclude the 2 users from joining a chat together again
+            // Chat.findById(chatId)
+            //   .then(chat => {
+            //     const otherUserId = chat.participants.filter(
+            //       id => id !== user._id
+            //     )[0];
+            //     User.findById(otherUserId)
+            //       .then(otherUser => repairUser(otherUser.username))
+            //       .catch(err => console.log("could not find user", err));
+            //   })
+            //   .catch(err => console.log("could not find chat", err));
           } else {
             setTimeout(
               () =>

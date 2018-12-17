@@ -39,6 +39,11 @@ export class ChatInput extends React.Component<IChatInputProps> {
     // don't want to reload page
     e.preventDefault();
 
+    // don't allow blank messages
+    if (!this.state.message.length) {
+      return;
+    }
+
     this.props.onSubmit(this.state.message);
     this.setState({ message: "" });
   };

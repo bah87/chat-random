@@ -88,7 +88,7 @@ export class Home extends React.Component<IHomeProps> {
         PAIRING_DELAY
       );
     } else {
-      this.setState({ pairingStatus: PairingStatusEnum.Unpaired });
+      this.setState({ pairingStatus: PairingStatusEnum.Unpaired, chat: [] });
     }
 
     this.setState(newState);
