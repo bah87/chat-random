@@ -21,6 +21,12 @@ export interface IHomeState {
   readonly chat: IChatMessage[];
 }
 
+export enum SocketEventsEnum {
+  RegisterUser = "register user",
+  RequestRandomChat = "request random chat",
+  NewMessage = "new message"
+}
+
 export class Home extends React.Component<IHomeProps> {
   public state: IHomeState;
 
@@ -28,6 +34,7 @@ export class Home extends React.Component<IHomeProps> {
     super(props);
     this.state = { socket: io("http://localhost:3001"), chat: [] };
     this.state.socket.on("chat message", this.handleResponse);
+    this.state.socket.emit(SocketEventsEnum.RegisterUser, props.username);
   }
 
   handleResponse = (response: IChatMessage) => {
